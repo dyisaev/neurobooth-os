@@ -29,14 +29,20 @@ class Pursuit(Task_Eyetracker):
 
 
 
-    def run(self, **kwargs):
-        self.present_instructions(True)        
-        self.run_trial(self.mov_pars)
+    def run(self, prompt=True, **kwargs):
+        print('run pursuit 1')
+        self.present_instructions(prompt)       
+        print('run pursuit 2')
+        self.present_task(self.mov_pars)
+        if prompt:
+            print('run pursuit 3')
+            self.present_text(screen=self.continue_repeat_screen, msg='continue-repeat-task', func=self.present_task(self.mov_pars),
+                          waitKeys=True)
         self.present_complete()
         self.close()
 
                                               
-    def run_trial(self, movement_pars):
+    def present_task(self, movement_pars):
         """ Run a smooth pursuit trial
 
         trial_duration: the duration of the pursuit movement

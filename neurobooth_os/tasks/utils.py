@@ -105,6 +105,19 @@ def rewind_video(win, mov):
         mov.seek(0)
         return True
 
+# def make_countdown(win):  
+    
+#     timer = core.CountdownTimer(5)
+#     while timer.getTime() > 0:
+            
+        
+#             line.draw()
+#             win.flip()
+
+    
+    
+    
+    
 def repeat_advance():
     key = event.waitKeys(keyList=['space', 'r'])
     if key == ["space"]:
