@@ -16,7 +16,7 @@ from neurobooth_os import config
 from neurobooth_os.iout.lsl_streamer import start_lsl_threads, close_streams, reconnect_streams
 from neurobooth_os.netcomm import socket_message, get_client_messages
 from neurobooth_os.tasks.task_importer import get_task_funcs
-from neurobooth_os.tasks.utils import get_data_timeout
+#from neurobooth_os.tasks.utils import get_data_timeout
 from neurobooth_os.iout import metadator as meta
 
 
