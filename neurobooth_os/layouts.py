@@ -29,14 +29,42 @@ def _init_layout(conn, exclusion=None, frame_sz=(320, 240)):
     sg.theme('Dark Grey 9')
     sg.set_options(element_padding=(0, 0),)
     layout = [
-        [sg.Text('Subject ID:', pad=((0, 0), 0), justification='left'), sg.Combo(meta.get_subj_ids(conn), readonly=True, key='subj_id', size=(44, 1), background_color='white', text_color='black')],
+        [sg.Text('First name:', pad=((0, 0), 0), justification='left'),
+         sg.Input(key='first_name', size=(44, 1),
+                  background_color='white', text_color='black')],
         [_space()],
-        [sg.Text('Staff ID:', pad=((0, 0), 0), justification='left'),  sg.Input(default_text="AN", key='staff_id', size=(44, 1), background_color='white', text_color='black')],
+
+        [sg.Text('Last name:', pad=((0, 0), 0), justification='left'),
+         sg.Input(key='last_name', size=(44, 1),
+                  background_color='white', text_color='black')],
         [_space()],
-        [sg.T("Study ID"),  sg.Combo(meta.get_study_ids(conn), key='study_id', enable_events=True, size=(44, 1), readonly=True)],
+
+        [sg.Button('Find subject', button_color='white', key='find_subject',
+                   enable_events=True)],
+        [_space()],
+
+        [sg.Listbox([], size=(30, 10), key='dob')],
+        [_space()],
+
+        [sg.Button('Select subject', button_color='white', key='select_subject',
+                   enable_events=True)],
+        [_space()],
+
+        [sg.Text('Staff ID:', pad=((0, 0), 0), justification='left'),
+         sg.Input(default_text="AN", key='staff_id', size=(44, 1),
+                  background_color='white', text_color='black')],
+        [_space()],
+
+        [sg.T("Study ID"),
+         sg.Combo(meta.get_study_ids(conn), key='study_id',
+                  enable_events=True, size=(44, 1), readonly=True)],
         [_space()],  
-        [sg.T("Collection ID"),  sg.Combo("", key='collection_id', enable_events=True, size=(44, 1), readonly=True)],
+
+        [sg.T("Collection ID"),
+         sg.Combo("", key='collection_id', enable_events=True, size=(44, 1),
+                  readonly=True)],
         [_space()],   
+
         [sg.Text('Task combo: '), sg.Combo("",  size=(64, 1), key="_tasks_", readonly=True)],
         [_space()],     
         [_space(), sg.ReadFormButton('Save', button_color=('white', 'black'), key="_init_sess_save_")],              
@@ -109,11 +137,20 @@ def _main_layout(sess_info, remote=False, frame_sz=(320, 240)):
         console_output = [sg.Text('Console \n Output:', pad=((0, 0), 0), justification='left',
                  auto_size_text=True), sg.Output(key='-OUTPUT-', size=(84, 30))]
     # console_output = [_space(3)]
+    subject_text = (f'Subject ID: {sess_info["subject_id"]}, {sess_info["first_name"]}',
+                    f' {sess_info["last_name"]}')
     layout_col1 = [
-        [_space(), sg.Text(f'Subject ID: {sess_info["subj_id"]}', pad =(20, 0 ), size=(20, 1), 
-         font=("Arial", 12, "bold"), text_color="black", background_color="white", k="_sbj_id_"),
-         sg.Text(f'Staff ID: {sess_info["staff_id"]}',  size=(20, 1), font=("Arial", 12, "bold"),
-          text_color="black", background_color="white", k="_staff_id_")
+        [_space(),
+        sg.Text(subject_text, pad =(20, 0), size=(30, 1),
+                font=("Arial", 12, "bold"),
+                text_color="black",
+                background_color="white",
+                k="_sbj_id_"),
+         sg.Text(f'Staff ID: {sess_info["staff_id"]}', size=(20, 1),
+                 font=("Arial", 12, "bold"),
+                 text_color="black",
+                 background_color="white",
+                 k="_staff_id_")
          ],
         [_space()],
 
@@ -129,16 +166,14 @@ def _main_layout(sess_info, remote=False, frame_sz=(320, 240)):
         console_output,
         [_space()],
 
-        [_space(1), _lay_butt('Initiate servers', '-init_servs-'),         
-         _space(5), _lay_butt('Display', 'RTD'), 
+        [_space(1), _lay_butt('Initiate servers', '-init_servs-'),
          _space(5), _lay_butt('Connect Devices', '-Connect-'),
          _space(5), _lay_butt('Plot Devices', 'plot'),
          ],         
         [_space()],
-
-        [_space(5), _lay_butt('Terminate servers', 'Shut Down'),
-         _space(5), sg.ReadFormButton('Start', button_color=('white', 'black')),
+        [_space(5), sg.ReadFormButton('Start', button_color=('white', 'black')),
          _space(5), _lay_butt('Pause', 'Pause tasks'),
+         _space(5), _lay_butt('Terminate servers', 'Shut Down'),
          ]]
 
     layout_col2 = [[sg.Image(data=imgbytes, key='Webcam', size=frame_sz)],
