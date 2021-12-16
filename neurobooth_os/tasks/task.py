@@ -17,9 +17,10 @@ import time
 from psychopy import visual, monitors, sound, core
 from psychopy import prefs
 #prefs.hardware['audioLib'] = ['pyo']
-
+   
 import neurobooth_os
 from neurobooth_os.tasks import utils
+from neurobooth_os.iout.iphone_recorder import IPhoneRecorder
 
 
 class Task():
@@ -232,6 +233,29 @@ class Introduction_Task(Task):
     def run(self, **kwargs):        
         self.present_instructions(prompt=False)
 
+class Task_Iphone(Task_Eyetracker):
+    def __init__(self,**kwargs): #recording time in seconds
+        super().__init__(**kwargs) 
+        self.iphone_recorder=IPhoneRecorder()
+        
+    def start_recording(self):
+        #send recording signal to IPhone through IPhone interface:
+        self.iphone_recorder.start_recording()
+        self.send_marker(f"iphone_recording_start", True)
+    def stop_recording(self):
+        self.iphone_recorder.stop_recording()
+        self.send_marker(f"iphone_recording_end",True)
+    def listen(self):
+        self.iphone_recorder.listen(self)
+    def run(self,**kwargs):
+        self.start_recording()
+        #here should go an asynchronous call in a separate thread
+        self.listen()
+        # this wait() call should go in the main thread
+        core.wait(self.recording_time)
+        # check that the listen process properly closes
+        self.stop_recording()
+    
 
 if __name__ == "__main__":
 
