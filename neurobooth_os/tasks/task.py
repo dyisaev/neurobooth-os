@@ -105,7 +105,7 @@ class Task():
         mySound = sound.Sound(1000, 0.2)
         utils.play_video(self.win, self.countdown_video, wait_time=4, stop=False)
         mySound.play()
-        core.wait(.2)
+        core.wait(.22)
         
     def present_video(self, video, msg, stop=False):
         self.send_marker(f"{msg}_start", True)
@@ -168,7 +168,7 @@ class Task_countdown(Task):
             self.present_text(screen=self.press_task_screen, msg='task-continue-repeat', func=self.present_task,
                             func_kwargs=func_kwargs, waitKeys=False)
 
-
+            
 class Task_Eyetracker(Task):
     def __init__(self, eye_tracker=None, monitor_width=55, subj_screendist_cm=60,  **kwargs):
         super().__init__(**kwargs)
@@ -176,7 +176,7 @@ class Task_Eyetracker(Task):
         self.eye_tracker = eye_tracker
 
         mon = monitors.getAllMonitors()[1]
-        self.mon_size = [1920, 1080] # monitors.Monitor(mon).getSizePix()
+        self.mon_size = monitors.Monitor(mon).getSizePix()
         self.SCN_W, self.SCN_H = self.mon_size
         self.monitor_width = monitor_width
         self.pixpercm = self.mon_size[0] / self.monitor_width
