@@ -26,12 +26,16 @@ if not op.exists(fname):
             "bat" : op.join(pakg_path, 'server_stm.bat')
             },
         'database':{
-            "dbname" : 'neurobooth',
-            'user':'neuroboother',
-            'pass': "",
-            'host':'192.168.100.1',
-            'remote_username': 'ab123',
-            'remote_address' : 'neurodoor.nmr.mgh.harvard.edu'
+            "dbname" : 'neurobooth_mockup2',
+            'user':'neurona',
+            'pass': "neurona",
+            'host':'localhost'
+#            "dbname" : 'neurobooth',
+#            'user':'neuroboother',
+#            'pass': "",
+  #          'host':'192.168.100.1',
+  #          'remote_username': 'ab123',
+  #          'remote_address' : 'neurodoor.nmr.mgh.harvard.edu'
             }
         }
     with open(fname, "w+") as f:
