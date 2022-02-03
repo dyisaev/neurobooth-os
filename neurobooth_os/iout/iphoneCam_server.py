@@ -4,7 +4,7 @@ from datetime import datetime
 import threading
 from time import sleep
 import json
-from iphone_device import IPhone
+from neurobooth_os.iout.iphone_device import IPhone
 
 c = threading.Condition()
 quit=False
@@ -50,7 +50,8 @@ def socket_thread(conn,file):
         except BlockingIOError as e:
             continue
         if not data: continue
-        print (data)
+        print (data[20:])
+        print(json.loads(data[20:].decode())['MessageType'])
         if data==b'START':
             file.write(data.decode("utf-8")+'\t'+str(datetime.now())+'\n')
         elif data==b'STOP':

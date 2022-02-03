@@ -66,13 +66,13 @@ class IPhone:
     VERSION=1
     MESSAGE_TYPES=set(['@START','@STOP','@STANDBY','@READY','@DUMP','@STARTTIMESTAMP','@INPROGRESSTIMESTAMP','@STOPTIMESTAMP'])
     MESSAGE_KEYS=set(['MessageType','SessionID','TimeStamp','Message'])
-    def __init__(self,sess_id=''):
+    def __init__(self,name,sess_id=''):
         self.connected=False
         self.recording=False
         self.tag=0
         self.iphone_sessionID=sess_id
         self._allmessages=[]
-        self.name='IPhone'
+        self.name=name
         self.create_outlet()
 
     def _validate_message(self,message):
